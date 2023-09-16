@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 const World = () => {
 	const [data, setData] = useState([0, 0]);
-	useEffect(() => {
-		navigator.geolocation.watchPosition(x => setData(x.coords));
-	}, []);
-	return <>{JSON.stringify(data, null, "\t")}{data.longitude}{JSON.stringify(Object.getOwnPropertyNames(Object.getPrototypeOf(x)))}</>;
+	const update = () => {
+		navigator.geolocation.getCurrentPosition(x => setData([x.coords.latitude, x.coords.longitude]), null, { enableHighAccuracy: true })
+	}
+	return <p onClick={update}>{data.join(" | ")}</p>;
 };
 export default World;

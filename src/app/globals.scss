@@ -23,3 +23,8 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
+
+.leaflet-control-locate-location circle {
+	animation: none !important;
+
+}

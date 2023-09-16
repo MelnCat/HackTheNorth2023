@@ -1,9 +1,10 @@
 "use client";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import LoadingScreen from "../components/Loading";
 
 const Map = dynamic(async() => import("@/components/Map"), {
-	loading: () => <p>loading...</p>,
+	loading: () => <LoadingScreen />,
 	ssr: false,
 });
 const Home = () => {
