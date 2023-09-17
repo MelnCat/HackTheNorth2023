@@ -47,8 +47,8 @@ const Map = () => {
 	const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 	const [openedWaypoint, setOpenedWaypoint] = useState(-1);
 	const [waypoints, setWaypoints] = useState(
-		localStorage.waypoints
-			? JSON.parse(localStorage.waypoints)
+		globalThis.localStorage.waypoints
+			? JSON.parse(globalThis.localStorage.waypoints)
 			: ([
 					{
 						coords: [43.47289490714024, -80.53953821701889],
@@ -133,7 +133,7 @@ const Map = () => {
 										  ]
 										: x.concat({ coords: pos, text: inText, user: "testUser", time: Date.now() });
 
-								localStorage.waypoints = JSON.stringify(data);
+								globalThis.localStorage.waypoints = JSON.stringify(data);
 								return data;
 							});
 							setInText("");

@@ -15,7 +15,7 @@ function Box({ color, size, scale, children, ...rest }: any) {
 	);
 }
 const World = () => {
-	const waypoints = localStorage.waypoints ? JSON.parse(localStorage.waypoints) : [];
+	const waypoints = globalThis.localStorage.waypoints ? JSON.parse(globalThis.localStorage.waypoints) : [];
 	const [data, setData] = useState([0, 0]);
 	const [orientation, setOrientation] = useState(null);
 	useEffect(() => {
