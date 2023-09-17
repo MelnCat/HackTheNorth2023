@@ -15,15 +15,16 @@ function Box({ color, size, scale, children, ...rest }: any) {
 	);
 }
 const World = () => {
-	const waypoints = globalThis.localStorage.waypoints ? JSON.parse(globalThis.localStorage.waypoints) : [];
+	const [waypoints, setWaypoints] = useState(null);
 	const [data, setData] = useState([0, 0]);
 	const [orientation, setOrientation] = useState(null);
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(x => setData([x.coords.latitude, x.coords.longitude]), null, {
 			enableHighAccuracy: true,
 		});
+		setWaypoints(globalThis.localStorage.waypoints ? JSON.parse(globalThis.localStorage.waypoints) : []);
 	}, []);
-	if (data[0] === 0 && data[1] === 0) return <LoadingScreen />;
+	if ((data[0] === 0 && data[1] === 0) || !waypoints) return <LoadingScreen />;
 	return (
 		<>
 			<ARButton />
