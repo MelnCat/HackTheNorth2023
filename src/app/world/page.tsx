@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { Interactive, XR, ARButton, Controllers } from "@react-three/xr";
 import { Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import WaypointText from "../../components/WaypointText"
+import LoadingScreen from "../../components/Loading";
+import WaypointText from "../../components/WaypointText";
 function Box({ color, size, scale, children, ...rest }: any) {
 	return (
 		<mesh scale={scale} {...rest}>
@@ -14,13 +15,15 @@ function Box({ color, size, scale, children, ...rest }: any) {
 	);
 }
 const World = () => {
+	const waypoints = localStorage.waypoints ? JSON.parse(localStorage.waypoints) : [];
 	const [data, setData] = useState([0, 0]);
+	const [orientation, setOrientation] = useState(null);
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(x => setData([x.coords.latitude, x.coords.longitude]), null, {
 			enableHighAccuracy: true,
 		});
 	}, []);
-	if (data[0] === 0 && data[1] === 0) return <p>loading</p>;
+	if (data[0] === 0 && data[1] === 0) return <LoadingScreen />;
 	return (
 		<>
 			<ARButton />
@@ -30,8 +33,11 @@ const World = () => {
 					<pointLight position={[0, 0, 1]} />
 					<mesh scale={1}>
 						<Interactive>
-							<WaypointText position={[0,0,0]}>hello there</WaypointText>
-							<WaypointText position={[1,0,0]}>byte</WaypointText>
+							{waypoints.map((x, i) => (
+								<WaypointText key={i} position={[(x.coords[0] - data[0]) * 1111, 0, (x.coords[1] - data[1]) * 1111]}>
+									{x.text}
+								</WaypointText>
+							))}
 						</Interactive>
 					</mesh>
 					<Controllers />

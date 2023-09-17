@@ -7,9 +7,11 @@ import type { Map as LMap } from "leaflet";
 import { css } from "@emotion/react";
 import "leaflet/dist/leaflet.css";
 import React, { Component } from "react";
+import { useRouter } from "next/router";
 import L from "leaflet";
 import { LocateControl } from "./LocateControl";
 import Add from "@mui/icons-material/Add";
+import ViewInAr from "@mui/icons-material/ViewInAr";
 import { Modal, Box, Button, TextField, Snackbar, IconButton, Alert, Typography } from "@mui/material";
 import LocationInaccuracyPopupAndroid from "./LocationInaccuracyPopupAndroid";
 
@@ -35,8 +37,7 @@ const customIcon = L.icon({
 let inaccuracyPopupDisplayed = false;
 let oldPosition = [0, 0];
 const Map = () => {
-	function handleWaypointClick() {
-	}
+	function handleWaypointClick() {}
 
 	const [pos, setPos] = useState([0, 0] as [number, number]);
 	const mapRef = useRef<LMap>(null);
@@ -119,22 +120,25 @@ const Map = () => {
 					<Button
 						variant="outlined"
 						onClick={() => {
-							setWaypoints(x =>
-								inText === "clear"
-									? [
-											{
-												coords: [43.47289490714024, -80.53953821701889],
-												text: "Cool place",
-												user: "northernHacker43",
-												time: Date.now() - 100000,
-											},
-									  ]
-									: x.concat({ coords: pos, text: inText, user: "testUser", time: Date.now() })
-							);
+							setWaypoints(x => {
+								const data =
+									inText === "clear"
+										? [
+												{
+													coords: [43.47289490714024, -80.53953821701889],
+													text: "Cool place",
+													user: "northernHacker43",
+													time: Date.now() - 100000,
+												},
+										  ]
+										: x.concat({ coords: pos, text: inText, user: "testUser", time: Date.now() });
+
+								localStorage.waypoints = JSON.stringify(data);
+								return data;
+							});
 							setInText("");
 							setShowSuccessPopup(true);
 							setMenuShown(false);
-							localStorage.waypoints = JSON.stringify(waypoints);
 						}}
 					>
 						Submit
@@ -223,6 +227,29 @@ const Map = () => {
 					`}
 				>
 					<Add scale={5} fontSize="large" onClick={() => setMenuShown(true)} />
+				</button>
+				<button
+					title="View in AR"
+					css={css`
+						position: fixed;
+						right: 20px;
+						bottom: 90px;
+						z-index: 444;
+						background-color: #bc3a3a;
+						border-radius: 50%;
+						padding: 8px;
+						box-shadow: 1px 1px 3px #000a;
+						color: white;
+						transition: background-color 0.2s;
+						&:hover {
+							filter: brightness(90%);
+						}
+						&:active {
+							filter: brightness(80%);
+						}
+					`}
+				>
+					<ViewInAr scale={5} fontSize="large" onClick={() => location.href = ("/world")} />
 				</button>
 			</section>
 

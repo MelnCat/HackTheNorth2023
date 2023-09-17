@@ -1,3 +1,4 @@
+'use client';
 import { createControlComponent } from "@react-leaflet/core";
 import * as L from "leaflet";
 import "leaflet.locatecontrol";
