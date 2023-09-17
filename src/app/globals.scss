@@ -19,12 +19,55 @@ main {
 	width: 100vw;
 	height: 100vh;
 }
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 }
 
 .leaflet-control-locate-location circle {
 	animation: none !important;
+	stroke: #ffffff !important;
+	fill: #d73a3a !important;
+}
+.leaflet-control-locate-circle {
+	fill: #d73a3a !important;
+}
+.MuiAlert-root {
+	margin-right: 5.2rem;
+}
 
+.leaflet-control-zoom {
+	border: none !important;
+}
+.leaflet-control-locate-location-arrow {
+	color: white !important;
+	filter: brightness(50);
+}
+.leaflet-control-zoom a,
+.leaflet-bar-part {
+	background-color: #bc3a3a !important;
+	border: none !important;
+	box-shadow: 1px 1px 3px #444;
+	span {
+		color: white !important;
+		font-weight: bolder;
+	}
+	&:last-child {
+		background-color: #a43232 !important;
+	}
+	&:hover {
+		filter: brightness(90%);
+	}
+	&:active {
+		filter: brightness(80%);
+	}
+}
+.MuiBox-root {
+	border-top: 18px #bc3a3a solid;
+}
+.MuiButtonBase-root {
+	color: #bc3a3a !important;
+
+	border-color: #bc3a3a44;
 }
